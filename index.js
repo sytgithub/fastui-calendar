@@ -43,15 +43,15 @@ class MonthBodyCell extends Component {
             <TouchableOpacity style={styles.monthBodyCell} activeOpacity={1} onPress={!dayInfo.disabled && onPress ? () => onPress(dayInfo) : null}>
                 <View style={cellDateStyle}>
                     <Text style={cellDateTextStyle}>
-                        {dayInfo.holiday ? dayInfo.holiday : dayInfo.dateText}
+                        {dayInfo.note ? dayInfo.note : dayInfo.dateText}
                     </Text>
                 </View>
                 {
-                    dayInfo.note && dayInfo.note !== ''
+                    dayInfo.holiday && dayInfo.holiday !== ''
                     ?
-                    <View style={[styles.monthBodyCellNote]}>
-                        <Text style={[styles.text, styles.monthBodyCellNoteText]}>
-                            {dayInfo.note}
+                    <View style={[styles.monthBodyCellHoliday]}>
+                        <Text style={[styles.text, styles.monthBodyCellHolidayText]}>
+                            {dayInfo.holiday}
                         </Text>
                     </View>
                     : null
@@ -63,7 +63,7 @@ class MonthBodyCell extends Component {
 
 class MonthBody extends Component {
     render() {
-        const {displayFormat, year, month, holiday, active, note, onPress} = this.props
+        const {displayFormat, year, month, note, active, holiday, onPress} = this.props
 
         // generate day cell
         let startDay = moment().year(year).month(month).date(1),
@@ -83,9 +83,9 @@ class MonthBody extends Component {
         }
 
         // add addFeatures
-        this.addFeature('holiday', holiday, dayCells)
-        this.addFeature('active', active, dayCells)
         this.addFeature('note', note, dayCells)
+        this.addFeature('active', active, dayCells)
+        this.addFeature('holiday', holiday, dayCells)
 
         // generate blanks
         const blanksNum = moment().year(year).month(month).date(1).day()
@@ -266,12 +266,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    monthBodyCellNote: {
+    monthBodyCellHoliday: {
         height: 15,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    monthBodyCellNoteText: {
+    monthBodyCellHolidayText: {
         color: '#1ba9ba',
         fontSize: 12,
     },
